@@ -85,10 +85,10 @@ Track 1 + 2:            [Day 0] [Day 1] [Day 2] [Day 3] [Day 4] [Day 5] [Sat] [S
 | Day | AI for questions/debugging | AI for writing code |
 |-----|---------------------------|---------------------|
 | Day 0, Day 1, Day 2 | Yes, unlimited | No — hand-write everything |
-| Day 3 | Yes | Pair programming: generate -> explain every line -> keep or reject |
-| Day 4-5 | Yes | Full speed with "explain every line" rule |
-| Weekend | Yes | Fully unlocked. README with design decisions required |
-| Day 8 | Yes | Debugging focus: diagnose with AI, explain root cause without AI |
+| Day 3 | Yes | Pair programming: generate → explain every line → keep or reject |
+| Day 4-5 | Yes | **AI-only.** Engineer may NOT hand-write code. All code comes from Claude. Small hand-edits (typo, variable rename) allowed. |
+| Weekend | Yes | **AI-only.** Full project built entirely through AI. README written by engineer (not generated). |
+| Day 8 | Yes | **AI-only for fixes.** Diagnose with AI, explain root cause to Mentor without AI. |
 | Day 9 | No AI at all | No AI at all — mock interview is pure brain |
 
 ---
@@ -120,7 +120,7 @@ Track 1 + 2:            [Day 0] [Day 1] [Day 2] [Day 3] [Day 4] [Day 5] [Sat] [S
 
 **Go Goal:** Engineer can hand-write a complete REST API microservice from scratch with clean architecture (handlers -> services -> repos), database access, tests, and middleware. Understands concurrency concepts well enough for an interview conversation.
 
-**AI Goal:** Engineer can use Claude Code effectively as a pair programmer — prompts are specific, uses planning mode for complex tasks, can explain every line AI generates, knows when to start a fresh context.
+**AI Goal:** Engineer transitions from manual coding to AI-directed development. By end of week, the engineer can build features entirely through AI — prompts are specific, uses planning mode for complex tasks, can explain every line AI generates, knows when to start a fresh context, and can recover when AI produces wrong output.
 
 #### Go Verification Questions — End of Week 1
 
@@ -210,6 +210,10 @@ Track 1 + 2:            [Day 0] [Day 1] [Day 2] [Day 3] [Day 4] [Day 5] [Sat] [S
 - Did you use planning mode? Show me where.
 - Was there a moment where AI led you astray? How did you recover?
 - Show me the README. Did you write it or did AI write it? Can you defend every claim in it?
+- Show me your workflow journal. Walk me through one moment where Claude went wrong.
+- How many fresh conversations did you start? Why each time?
+- Show me your CLAUDE.md files. Did you decompose them? When and why?
+- What's the longest conversation you had? What happened to output quality?
 
 ---
 
@@ -248,6 +252,10 @@ Track 1 + 2:            [Day 0] [Day 1] [Day 2] [Day 3] [Day 4] [Day 5] [Sat] [S
 - What goes in CLAUDE.md for a new project?
 - The Engineer is stuck on a bug for 30 minutes. Walk me through how to use AI to unblock.
 - What can't AI help with? When is it better to read the docs or ask a person?
+- Walk me through how you'd prompt Claude to build a new endpoint from scratch. Show me live.
+- Claude just generated a function with a bug. How do you fix it without writing code yourself?
+- When did you hit context limits this week? What did you do about it?
+- Show me your Day 4 prompt log. What patterns did you discover about good vs bad prompts?
 
 ---
 
@@ -461,6 +469,13 @@ _"Show me your handler. What happens if the JSON is malformed? What does the err
 - **Rule: AI as pair programmer.** Engineer generates code -> explains every line -> keeps or rejects
 - Engineer's first time using AI to write Go code
 
+**AI Exercise — First Contact (30 min):**
+- Engineer writes a deliberately vague prompt: "add a delete endpoint." See what Claude produces.
+- Engineer rewrites the prompt 3 times, each more specific. Compare outputs.
+- Engineer shows all 4 outputs to Mentor at end of day: "which was best and why?"
+
+This prepares them for Day 4 when AI becomes the only way to write code.
+
 #### Mentor Time (~1.5 hrs)
 - 25 min: morning — Mentor teaches AI techniques
 - 15 min: midday check
@@ -501,10 +516,25 @@ _"If I change the database tomorrow, what code do you need to change? Show me." 
 - Write integration tests that test the full handler -> DB flow
 
 #### AI Assistant Agenda
+- Morning (15 min): Mentor announces **"AI-only" rule**:
+  - "From today, you don't write code. Claude writes code. You direct, review, and explain."
+  - Small hand-edits allowed (fixing a typo, renaming a variable). New code, new functions, new files — all through AI.
+  - "If Claude generates something wrong, you can't just fix it by hand. Figure out how to get Claude to fix it."
 - Morning (10 min): Mentor introduces **"wrong problem" check technique**
   - Before building a feature, Engineer asks AI: "what are the different ways to approach X, and what are the tradeoffs?"
   - Prevents wasted work on wrong architecture
-- **Rule: AI at full speed.** Engineer uses Claude Code freely but must explain every line.
+- **Rule: AI writes all code.** Engineer directs, reviews, explains. Manual code is forbidden.
+
+**AI Exercise — Prompt Debugging (during the day):**
+- When Claude generates incorrect code (it will), the Engineer must fix it *through prompting*, not by hand
+- Engineer keeps a log: "What I prompted → What Claude produced → What was wrong → How I fixed the prompt"
+- Mentor reviews this log at end of day — it's as important as the code itself
+
+**AI Exercise — Context Limits (end of day, 15 min):**
+- By end of Day 4, the conversation will be long. Engineer should notice Claude losing context.
+- Engineer tries `/compact`. Does it help?
+- Engineer starts a fresh conversation with a brief. Compare quality of output.
+- Report to Mentor: "Here's when Claude started degrading and what I did about it."
 
 #### Mentor Time (~1.5 hrs)
 - 10 min: Mentor teaches AI technique
@@ -554,8 +584,20 @@ _"Trace a POST /users request from the HTTP handler all the way to the database 
 - [Mastering errgroup](https://dev.to/jones_charles_ad50858dbc0/go-concurrency-made-easy-mastering-errgroup-for-error-handling-and-task-control-219) (~20 min read)
 
 #### AI Assistant Agenda
-- **AI at full speed.** This is the day the Engineer should feel productive with Claude Code.
-- No new AI concepts — just practice the workflow.
+- **AI-only continues.** Engineer builds the entire Day 5 service through Claude Code.
+- No new AI lectures — today is about building speed and judgment through practice.
+
+**AI Exercise — Planning Mode Showdown (morning, 30 min):**
+- Engineer builds the first endpoint (e.g., CRUD for the main resource) *without* using planning mode — just direct prompting.
+- Engineer builds the second endpoint *with* planning mode — review the plan, adjust, then execute.
+- Compare: which was faster? Which produced cleaner code? Which had fewer bugs?
+- Engineer writes 2-3 sentences about what they learned. Mentor reviews at end of day.
+
+**AI Exercise — The Bad Spec (afternoon, 20 min):**
+- Mentor gives the Engineer a deliberately ambiguous requirement: "add an endpoint that handles orders"
+- Engineer prompts Claude with this vague spec. Claude will make assumptions.
+- Engineer must identify what Claude assumed, decide which assumptions are wrong, and re-prompt with a better spec.
+- Goal: learn that AI output quality = prompt quality. Garbage in, garbage out.
 
 #### Mentor Time (~2 hrs)
 - 30 min: morning — Mentor leads concurrency whiteboard session (goroutines, channels, waitgroup, errgroup — when to use what, draw diagrams)
@@ -594,11 +636,17 @@ Build a REST API service from scratch. Requirements:
 - Claude Code cheat sheet (provided by mentor)
 
 #### AI Assistant Agenda
-- **AI fully unlocked.** No restrictions for the Engineer.
+- **AI-only for all code.** The entire weekend project is built through Claude Code. The Engineer never writes implementation code by hand.
+- The README is the one exception — Engineer writes it themselves. It forces articulation of decisions in their own words.
 - Engineer uses the Claude Code cheat sheet for reference
-- Engineer practices using AI for self-learning: "explain this pattern", "what are the tradeoffs of X vs Y"
 - **Progressive disclosure:** As the project grows, Engineer decomposes CLAUDE.md into per-layer files (see cheat sheet section 4). Root CLAUDE.md keeps project-wide rules; `internal/handler/CLAUDE.md`, `internal/service/CLAUDE.md`, `internal/repository/CLAUDE.md` hold layer-specific conventions.
-- The README forces articulation of decisions — writing it exposes gaps in understanding
+
+**AI Challenge — The Workflow Journal:**
+- Engineer keeps a short journal (5-10 bullet points total across the weekend, not a novel):
+  - At least 2 moments where Claude produced wrong code and how they fixed the prompt
+  - At least 1 moment where they hit context limits and what they did
+  - At least 1 moment where planning mode helped (or didn't)
+- Mentor reviews this journal on Monday — it's part of the Monday review alongside the code
 
 #### Mentor Time
 - ~0 hrs structured from Mentor
@@ -628,9 +676,15 @@ _The code on GitHub IS the verification. Monday review will expose everything._
 - [Learn Go with Tests: Working Without Mocks](https://quii.gitbook.io/learn-go-with-tests/testing-fundamentals/working-without-mocks) — if testing approach needs refinement
 
 #### AI Assistant Agenda
-- **AI for debugging.** Mentor finds bugs/issues in the weekend project.
-- Engineer uses AI to diagnose and fix — but must explain the root cause **without AI**.
-- Practice the loop: "debug with AI, explain without AI"
+- **AI-only for fixes.** Mentor finds bugs/issues in the weekend project.
+- Engineer uses AI to diagnose and fix — through prompting, not manual edits.
+- But: Engineer must explain the root cause **without AI** to the Mentor.
+- Practice the loop: "prompt AI to debug → understand the fix → explain to Mentor in your own words"
+
+**AI Exercise — Blind Debugging (30 min):**
+- Mentor introduces a subtle bug into the Engineer's weekend project (e.g., missing error check, wrong SQL query, off-by-one)
+- Engineer must use Claude Code to find it — but can only describe symptoms, not look at the diff
+- Tests the real workflow: "something is broken in production, use AI to help diagnose"
 
 #### Mentor Time (~2 hrs)
 - 45 min: Mentor reviews weekend project code (Mentor comes prepared, reads code beforehand)
