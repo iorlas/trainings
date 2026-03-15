@@ -30,10 +30,6 @@ Self-service reference materials. Pick what you need, no mentor required.
 - **Know Copilot, want Claude Code?** Jump to [03-claude-code-nextjs](./programs/03-claude-code-nextjs/) if you're a JS/TS dev, or [02-claude-code-golang](./programs/02-claude-code-golang/) if you want to learn Go at the same time.
 - **Preparing for a hackathon?** Go straight to [Hackathon 2026 Techniques Menu](./guides/01-hackathon-2026/TECHNIQUES-MENU.md).
 
-## Contributors
-
-- Denis Tomilin
-
 ## License
 
 MIT — see [LICENSE](./LICENSE).
