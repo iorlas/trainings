@@ -1,0 +1,48 @@
+<!--
+  EXAMPLE CLAUDE.md — a lean, one-page repo instruction file for an AI coding agent.
+  Copy into your repo root as CLAUDE.md and replace every ‹fill in›.
+  Read the guide (README.md next to this file) for WHY each section exists.
+
+  Rule of thumb: every line is either a FACT the agent can't guess,
+  or a rule tied to a failure you have ACTUALLY watched it make. Delete the rest.
+  Verify each command runs before committing it — a wrong command here is worse than none.
+  Never put secrets, tokens, or production hostnames here — this file ships every session.
+-->
+
+# Commands
+- Test:    ‹make test›        (single: ‹make test FILTER=Foo›)
+- Check:   ‹make check›       # lint + types + format + static analysis + tests, one gate
+- Format:  ‹make fmt›
+- Done = `make check` passes on touched files + summary notes any API/schema/config change.
+
+# Structure
+- ‹src/services›   — business logic lives here, not in controllers/handlers
+- ‹src/models›     — data contracts / types; reuse before creating new ones
+- ‹src/lib›        — shared helpers and utilities; reuse before adding
+- ‹migrations/›    — never edit an existing migration; add a new one
+- ‹legacy/›        — change with extra care (see Safety)
+
+# Code changes
+- Reuse existing types, models, helpers, and services. Adding a new
+  package/pattern/abstraction: name what you checked first and why it didn't fit.
+- Follow surrounding code style even if imperfect.
+- Fix only what the task requires. Note unrelated problems at the end; don't fix them.
+- Legacy code: optimize for safety and compatibility first.
+
+# Safety
+- Do not change public APIs, routes, database schema, configs, or permissions unless required.
+  If a change touches any of these, call it out at the top of your summary.
+- Never paste code, credentials, or private data into web searches or external tools.
+
+# Communication
+- Be practical, concise, terse.
+- Unclear task: make the best reasonable assumption and state it in one line.
+- Ask only when continuing may cause a wrong or destructive change.
+- Schema / API / auth / multi-file changes: list Risks + Assumptions before implementing.
+  Label Verified / Assumed only when they differ. Trivial changes: just do them.
+- Prefer the smallest relevant verification or spike first.
+
+# Local & shared
+- If `AGENTS.local.md` exists, follow it: @AGENTS.local.md
+- Shared cross-tool knowledge lives in AGENTS.md: @AGENTS.md
+- Search with `rg` / `fd`, not `grep -R` / `find`.
